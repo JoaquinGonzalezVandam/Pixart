@@ -1,0 +1,24 @@
+#container{
+	position: center;
+	width: 400px;
+	height: 400px;
+}
+.actions{
+	position: center;
+	width: 400px;
+}
+.acciones-botones{
+	position: center;
+	width: 400px;
+}
+#color-pick div{
+	width: 400px;
+	border: 1px solid lightgrey;
+    border-radius: 25px;
+}
+input{
+	height: 20px;
+}
+button.grid{
+	height: 26px;
+}
