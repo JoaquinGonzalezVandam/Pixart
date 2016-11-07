@@ -16,10 +16,16 @@ var myPixelDraw ={
 	fns: {
 		calcSize: function(cantidadCeldas){
 			var tamañoDeseado = cantidadCeldas * cantidadCeldas;
-			$(".container").empty();
+			$("#container").empty();
 			for (var i = 0; i < tamañoDeseado ; i++) {
-					$(".container").append('<div class: "cell" draggable></div>');
+					$("#container").append('<div class="cell" draggable></div>');
 				}
+			var totalAncho = parseInt($("#container").css("width"));
+			var anchoCelda = totalAncho/cantidadCeldas;
+			
+			$(".cell").css({
+				"width": 
+			});
 		},
 		reSize: function(){
 			console.log("reSize");
