@@ -7,14 +7,17 @@ var myPixelDraw ={
 	init: function(container){
 		this.container = container;
 		var keys = Object.keys(this.fns);
-		console.log(keys);
-		for (var i = 0; i < keys.lenght; i++) {
-
+		
+		for (var i = 0; i < keys.length; i++) {
+			this.keys;
 		}
 	},
 	
 	fns: {
 		calcSize: function(cantidadCeldas){
+			if(cantidadCeldas == null){
+				cantidadCeldas = myPixelDraw.defaultCells;	
+			}
 			var tamañoDeseado = cantidadCeldas * cantidadCeldas;
 			$("#container").empty();
 			for (var i = 0; i < tamañoDeseado ; i++) {
@@ -24,7 +27,10 @@ var myPixelDraw ={
 			var anchoCelda = totalAncho/cantidadCeldas;
 			
 			$(".cell").css({
-				"width": 
+				"width": anchoCelda + "px",
+				"height": anchoCelda + "px",
+				"background-color": "#ecf0f1",
+				"outline": "#FFFFFF solid thick",
 			});
 		},
 		reSize: function(){
