@@ -7,9 +7,10 @@ var myPixelDraw ={
 	init: function(container){
 		this.container = container;
 		var keys = Object.keys(this.fns);
-		
-		for (var i = 0; i < keys.length; i++) {
-			this.keys;
+
+		for (var i = 0; i <10 ; i++) {
+			this.fns[keys[i]]();
+			
 		}
 	},
 	
@@ -21,7 +22,7 @@ var myPixelDraw ={
 			var tamañoDeseado = cantidadCeldas * cantidadCeldas;
 			$("#container").empty();
 			for (var i = 0; i < tamañoDeseado ; i++) {
-					$("#container").append('<div class="cell" draggable></div>');
+					$("#container").append('<div class="cell" draggable="true"></div>');
 				}
 			var totalAncho = parseInt($("#container").css("width"));
 			var anchoCelda = totalAncho/cantidadCeldas;
@@ -30,35 +31,82 @@ var myPixelDraw ={
 				"width": anchoCelda + "px",
 				"height": anchoCelda + "px",
 				"background-color": "#ecf0f1",
-				"outline": "#FFFFFF solid thick",
+				"outline": "#FFFFFF solid 1px",
+				"cursor" : "pointer"
 			});
 		},
-		reSize: function(){
-			console.log("reSize");
+		reSize: function(val){
+			this.calcSize(val);
 		},
 		detectMouseUp: function(){
-			console.log("detectMouseUp");
+			$(document).mouseup(function(){
+				this.coloring = false;
+			});
 		},
 		colorPalette: function(){
-			console.log("colorPalette");
+			$("#color-pick >*").each(function(index){
+				var color = $(this).attr("class");
+				$(this).css({
+					"background-color" : color,
+				});
+			});
 		},
 		pickColor: function(){
-			console.log("pickColor");
+			$("#color-pick div").click(function(){
+				myPixelDraw.colorPicked = $(this).attr("class");
+				$("#color-pick div.select").removeClass("select");
+				$(this).addClass("select");
+			});
 		},
 		colorIt: function(){
-			console.log("colorIt");
+			$('#container .cell').mousedown(function(event) {
+				var that = $(this);
+				event.preventDefault();
+    			switch (event.which) {
+	        		case 1:
+			            that.css({
+			            	"background-color" : myPixelDraw.colorPicked
+			            });
+			            break;
+			        case 3:
+			            that.css({
+			            	"background-color" : myPixelDraw.cellColor
+			            });
+			            break;
+		    	}
+			});
 		},
 		colorOnDrag: function(){
-			console.log("colorOnDrag");
+			$(document).mousemove(function(event){
+				if (myPixelDraw.coloring=true) {
+					var y = event.pageY;
+					var x = event.pageX;
+					document.elementFromPoint(x,y)
+						switch (event.which) {
+		        		case 1:
+				            $(this).css({
+				            	"background-color" : myPixelDraw.colorPicked
+				            });
+				            break;
+				        case 3:
+				        	$(this).css({
+				            	"background-color" : myPixelDraw.cellColor
+				            });
+				            break;
+			    	}
+				}
+			});
 		},
 		reset: function(){
-			console.log("reset");
+
 		},
 		toggleBorders: function(){
-			console.log("toggleBorders");
+
 		},
 		disableRightClick: function(){
-			console.log("disableRightClick");
+			$("#container").contextmenu(function(){
+				return false
+			});
 		},
 		grabImage: function(){
 			console.log("grabImage");
@@ -67,4 +115,22 @@ var myPixelDraw ={
 };
 $(document).ready(function(){
 	myPixelDraw.init($("#container"));
+	$("#reset").click(function(){
+		$(".cell").css({
+			"background-color" : myPixelDraw.cellColor
+		})
+	});
+
+	$("#toggle-border").click(function(){
+				$(".cell").toggleClass("no-border");
+			});
+
+	$("#sizeit").click(function(){
+		var valorInput = $("#resize").val();
+		if (valorInput>50) {
+			alert("ingrese un valor entre 0 y 50")
+		}else{
+			myPixelDraw.fns.reSize(valorInput);
+		}
+	});
 });
